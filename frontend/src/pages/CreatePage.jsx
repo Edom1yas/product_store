@@ -1,13 +1,19 @@
 import { Box, Button, Container, Heading, Input, VStack } from '@chakra-ui/react';
 import { useState } from 'react';
+import { useProductStore } from '../store/product';
 
 const CreatePage = () => {
   const [newProduct, setNewProduct] = useState({
     name:"",
     price:"",
-    image:"",
+    image:"", 
   });
-  const handleAddProduct = () => console.log("New Product Added");
+ const {createProduct} = useProductStore()
+  const handleAddProduct = async() => {
+    const {success, message} = await createProduct(newProduct);
+    console.log("Success:", success);
+    console.log("Message:", message);
+  };
   return (
     <Container maxW={"container.sm"}>
     <VStack spacing={8}>
@@ -32,7 +38,7 @@ const CreatePage = () => {
           />
 
           <Input
-            placeholder='ProductPrice'
+            placeholder='Product Price'
             name="price"
             value={newProduct.price}
             onChange={(e) => setNewProduct({...newProduct, price:e.target.value})}
