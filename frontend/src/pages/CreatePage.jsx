@@ -1,4 +1,6 @@
+"use client"
 import { Box, Button, Container, Heading, Input, VStack } from '@chakra-ui/react';
+import { Toaster, toaster } from "../components/ui/toaster"
 import { useState } from 'react';
 import { useProductStore } from '../store/product';
 
@@ -8,13 +10,32 @@ const CreatePage = () => {
     price:"",
     image:"", 
   });
- const {createProduct} = useProductStore()
+const {createProduct} = useProductStore()
   const handleAddProduct = async() => {
     const {success, message} = await createProduct(newProduct);
+    if (success){
+    toaster.create({
+      description: "Product Created Successfully",
+      type: "success",
+      closable: true,
+    })
+    }else{
+       toaster.create({
+      description: "Error Creating Product",
+      type: "error",
+      closable: true,
+    })
+    }
+
+    //Testing Purpose
     console.log("Success:", success);
     console.log("Message:", message);
+
+    setNewProduct({name:"", image:"", price:""});
   };
   return (
+    <>
+    <Toaster />
     <Container maxW={"container.sm"}>
     <VStack spacing={8}>
       <Heading as={"h1"} size={"2xl"} textAlign={"center"} mb={8}>
@@ -53,7 +74,7 @@ const CreatePage = () => {
 
     </VStack>
     </Container>
-    
+    </>
   )
 }
 
