@@ -43,3 +43,6 @@ coverage/
 
 # Test output
 test-output/
+
+# Claude Code configuration
+.claude/
