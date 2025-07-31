@@ -46,3 +46,6 @@ test-output/
 
 # Claude Code configuration
 .claude/
+
+#lint file
+
